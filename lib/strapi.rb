@@ -1,0 +1,11 @@
+require "active_support"
+require "faraday"
+require "oj"
+
+require_relative "strapi/connection"
+require_relative "strapi/error"
+require_relative "strapi/media"
+require_relative "strapi/model"
+require_relative "strapi/request"
+require_relative "strapi/response"
+require_relative "strapi/version"
