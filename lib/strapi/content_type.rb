@@ -49,10 +49,6 @@ module Strapi
         @_plural_id = name
       end
 
-      def _plural_id
-        @_plural_id ||= to_s.demodulize.dasherize.downcase.pluralize
-      end
-
       def field(attr, options = {})
         define_method attr do
           strapi_attr_value(attr, options)
@@ -81,6 +77,12 @@ module Strapi
 
       def strapi_filter_query(query_hash)
         Request.get("#{_plural_id}?#{query_hash.to_query}").data
+      end
+
+      private
+
+      def _plural_id
+        @_plural_id ||= to_s.demodulize.tableize.dasherize
       end
     end
   end

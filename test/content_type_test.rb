@@ -9,8 +9,12 @@ class Farm < Strapi::ContentType
 end
 
 class Cow < Strapi::ContentType
+  plural_id 'cows'
   field :name
   field :farm, content_type: 'Farm'
+end
+
+class GuessMyPluralId < Strapi::ContentType
 end
 
 class ContentTypeTest < Minitest::Test
@@ -31,5 +35,9 @@ class ContentTypeTest < Minitest::Test
     assert_equal cow.name, 'Hershey'
     assert_equal cow.farm, farm
     assert_equal farm.cows.first, cow
+  end
+
+  def test_it_infers_plural_id
+    assert_equal GuessMyPluralId.send(:_plural_id), 'guess-my-plural-ids'
   end
 end
