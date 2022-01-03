@@ -1,0 +1,37 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "name": "McDonald’s",
+        "createdAt": "2022-01-02T15:42:18.967Z",
+        "updatedAt": "2022-01-02T18:11:14.241Z",
+        "cows": {
+          "data": [
+            {
+              "id": 1,
+              "attributes": {
+                "name": "Hershey",
+                "createdAt": "2022-01-02T20:14:53.383Z",
+                "updatedAt": "2022-01-02T20:14:55.291Z",
+                "publishedAt": "2022-01-02T20:14:55.290Z"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "name": "Monsanto",
+        "createdAt": "2022-01-02T15:42:18.967Z",
+        "updatedAt": "2022-01-02T18:11:14.241Z",
+        "cows": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "meta": { "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 1 } }
+}

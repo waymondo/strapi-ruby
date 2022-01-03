@@ -3,45 +3,46 @@ module Strapi
     attr_reader :id, :attributes
 
     def initialize(response_data)
-      @id = response_data["id"]
-      @attributes = response_data["attributes"].transform_keys(&:underscore)
+      @id = response_data['id']
+      @attributes = response_data['attributes'].transform_keys(&:underscore)
     end
 
     def created_at
-      DateTime.parse @attributes["created_at"]
+      datetime_from_timestamp 'created_at'
     end
 
     def updated_at
-      DateTime.parse @attributes["updated_at"]
+      datetime_from_timestamp 'updated_at'
+    end
+
+    def published_at
+      datetime_from_timestamp 'published_at'
     end
 
     def ==(other)
-      id == other.id
+      other.is_a?(self.class) && id == other.id
     end
 
     private
+
+    def datetime_from_timestamp(key)
+      return unless (timestamp = @attributes[key])
+
+      DateTime.parse timestamp
+    end
 
     def strapi_attr_value(attr, options)
       value = @attributes[attr.to_s]
       return value unless (content_type = options[:content_type])
 
-      content_type.new(value["data"])
+      if (data = value['data']).is_a?(Array)
+        data.map do |entry|
+          content_type.constantize.new(entry)
+        end
+      else
+        content_type.constantize.new(data)
+      end
     end
-
-    # def strapi_apply_attribute_options(value, options)
-    #   options.each_pair do |key, option_value|
-    #     case key
-    #     when :markdown
-    #       # TODO: markdown support
-    #       return Kramdown::Document.new(value).to_html if value.present?
-    #     when :content_type
-    #       return strapi_convert_to_content_type(value, option_value, options[:group])
-    #     when :media
-    #       return Media.new(value)
-    #     end
-    #   end
-    #   value
-    # end
 
     class << self
       def plural_id(name)
@@ -49,7 +50,7 @@ module Strapi
       end
 
       def _plural_id
-        @_plural_id ||= to_s.demodulize.dasherize.pluralize
+        @_plural_id ||= to_s.demodulize.dasherize.downcase.pluralize
       end
 
       def field(attr, options = {})
@@ -62,18 +63,11 @@ module Strapi
         end
       end
 
-      def find(id)
-        new Request.get("#{_plural_id}/#{id}").data
+      def find(id, query_hash = { populate: '*' })
+        new Request.get("#{_plural_id}/#{id}?#{query_hash.to_query}").data
       end
 
-      def find_by(query_hash)
-        hash = strapi_filter_query(query_hash)[0]
-        raise NotFoundError unless hash
-
-        new(hash)
-      end
-
-      def all(query_hash = { populate: "*" })
+      def all(query_hash = { populate: '*' })
         strapi_filter_query(query_hash).map do |result|
           new result
         end

@@ -1,0 +1,22 @@
+{
+  "data": {
+    "id": 1,
+    "attributes": {
+      "name": "Hershey",
+      "createdAt": "2022-01-02T20:14:53.383Z",
+      "updatedAt": "2022-01-02T20:14:55.291Z",
+      "publishedAt": "2022-01-02T20:14:55.290Z",
+      "farm": {
+        "data": {
+          "id": 1,
+          "attributes": {
+            "name": "McDonald’s",
+            "createdAt": "2022-01-02T15:42:18.967Z",
+            "updatedAt": "2022-01-02T18:11:14.241Z"
+          }
+        }
+      }
+    }
+  },
+  "meta": {}
+}
