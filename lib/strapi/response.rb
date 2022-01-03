@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Strapi
+  # The parsed response returned from the Strapi API
   class Response
     attr_reader :parsed_response
 

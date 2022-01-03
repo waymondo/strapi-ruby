@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Strapi
+  # The class for defining a Ruby class that represents a Strapi Content-Type
   class ContentType
     attr_reader :id, :attributes
 
