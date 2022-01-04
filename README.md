@@ -67,6 +67,10 @@ farm.name # => "McDonald’s"
 farm.cows # => [#<Cow>, #<Cow>]
 ```
 
+In keeping with ruby conventions, attribute keys returned from your Strapi API will be underscored,
+so if you have an attribute of `"colorPattern": "jersey"` in your JSON, your field definition should
+be `field :color_pattern`.
+
 [`Strapi::Media`](https://github.com/waymondo/strapi-ruby/blob/main/lib/strapi/media.rb) is an
 included content type class to represent photos, videos, and files. Feel free to extend this class
 if you would like to add additional functionality or granularity.
