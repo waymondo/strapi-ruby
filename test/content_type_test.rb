@@ -26,11 +26,11 @@ class ContentTypeTest < Minitest::Test
   end
 
   def test_it_can_query_farms_and_cows
-    farms = Farm.all
+    farms = Farm.all(populate: '*')
     assert_equal farms.size, 2
     farm = farms.first
     assert_equal farm.name, 'McDonald’s'
-    cow = Cow.find(1)
+    cow = Cow.find(1, populate: '*')
     assert_equal cow.id, 1
     assert_equal cow.name, 'Hershey'
     assert_equal cow.farm, farm

@@ -63,17 +63,21 @@ module Strapi
         end
       end
 
-      def find(id, query_hash = { populate: '*' })
+      def find(id, query_hash = {})
         new Request.get("#{_plural_id}/#{id}?#{query_hash.to_query}").data
       end
 
-      def all(query_hash = { populate: '*' })
-        strapi_filter_query(query_hash).map do |result|
-          new result
-        end
+      def all(query_hash = {})
+        get_list(query_hash)
       end
 
       def where(query_hash)
+        get_list(query_hash)
+      end
+
+      private
+
+      def get_list(query_hash)
         strapi_filter_query(query_hash).map do |result|
           new result
         end
@@ -82,8 +86,6 @@ module Strapi
       def strapi_filter_query(query_hash)
         Request.get("#{_plural_id}?#{query_hash.to_query}").data
       end
-
-      private
 
       def _plural_id
         @_plural_id ||= to_s.demodulize.tableize.dasherize
