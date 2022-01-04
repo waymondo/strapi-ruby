@@ -12,6 +12,12 @@ your Strapi content types as it is to define them within Strapi itself.
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'strapi'
+```
+
+Or if you want to run the absolute latest, potentially unreleased version:
+
+``` ruby
 gem 'strapi', github: 'waymondo/strapi-ruby'
 ```
 
@@ -19,10 +25,10 @@ And then execute:
 
     $ bundle install
 
-This gem has only been tested with Strapi v4. It may work with previous versions of Strapi, but they
-remain untested.
-
 ## Usage
+
+This gem has only been tested with Strapi v4. It may work with previous versions of Strapi, but they
+remain untested at this time.
 
 ### Configuration
 
