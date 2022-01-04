@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ENV['STRAPI_HOST_URL'] = 'http://localhost:1337/api'
+ENV['STRAPI_HOST_URL'] = 'http://localhost:1337'
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 

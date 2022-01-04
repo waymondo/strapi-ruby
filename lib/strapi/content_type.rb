@@ -38,12 +38,13 @@ module Strapi
       value = @attributes[attr.to_s]
       return value unless (content_type = options[:content_type])
 
+      content_type_class = content_type.is_a?(String) ? content_type.constantize : content_type
       if (data = value['data']).is_a?(Array)
         data.map do |entry|
-          content_type.constantize.new(entry)
+          content_type_class.new(entry)
         end
       else
-        content_type.constantize.new(data)
+        content_type_class.new(data)
       end
     end
 
