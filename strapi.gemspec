@@ -8,8 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors = ['justin talbott']
   spec.email = ['gmail@justintalbott.com']
 
-  spec.summary = 'Easily define Strapi content as Ruby classes'
-  spec.description = 'Easily define Strapi content as Ruby classes'
+  spec.summary = 'Simple Ruby classes for Strapi content types'
   spec.homepage = 'https://github.com/waymondo/strapi-ruby'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 2.7.0'
@@ -28,9 +27,10 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activesupport', '>= 5.0'
-  spec.add_dependency 'faraday', '>= 1.0'
-  spec.add_dependency 'oj', '>= 3.0'
+  spec.add_dependency 'activesupport'
+  spec.add_dependency 'faraday', '~> 2.0'
+  spec.add_dependency 'faraday-net_http', '~> 2.0'
+  spec.add_dependency 'oj', '~> 3.0'
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

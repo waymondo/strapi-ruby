@@ -5,7 +5,18 @@ module Strapi
   class Connection
     class << self
       def instance
-        @instance ||= Faraday::Connection.new("#{ENV['STRAPI_HOST_URL']}/api", options)
+        @instance ||= build_instance
+      end
+
+      private
+
+      def build_instance
+        unless Faraday.default_adapter
+          require 'faraday/net_http'
+          Faraday.default_adapter = :net_http
+        end
+
+        Faraday::Connection.new("#{ENV['STRAPI_HOST_URL']}/api", options)
       end
 
       def options
