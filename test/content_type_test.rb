@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'webmock_support'
 
 class Farm < Strapi::ContentType
   plural_id 'farms'
@@ -14,16 +15,11 @@ class Cow < Strapi::ContentType
   field :farm, content_type: 'Farm'
 end
 
-class GuessMyPluralId < Strapi::ContentType
+class FarmWorker < Strapi::ContentType
 end
 
 class ContentTypeTest < Minitest::Test
-  def setup
-    stub_request(:get, 'http://localhost:1337/api/farms?populate=*')
-      .to_return(body: File.read(File.join(__dir__, 'fixtures', 'farms.json')), status: 200)
-    stub_request(:get, 'http://localhost:1337/api/cows/1?populate=*')
-      .to_return(body: File.read(File.join(__dir__, 'fixtures', 'cow.json')), status: 200)
-  end
+  include WebmockSupport
 
   def test_it_can_query_farms_and_cows
     farms = Farm.all(populate: '*')
@@ -37,7 +33,56 @@ class ContentTypeTest < Minitest::Test
     assert_equal farm.cows.first, cow
   end
 
+  def test_it_throws_a_error_when_it_cannot_find_a_cow
+    error = assert_raises(Strapi::Error) { Cow.find(404) }
+    assert_equal error.message, 'Not Found'
+  end
+
   def test_it_infers_plural_id
-    assert_equal GuessMyPluralId.send(:_plural_id), 'guess-my-plural-ids'
+    assert_equal FarmWorker.send(:_plural_id), 'farm-workers'
+  end
+
+  def test_it_throws_an_error_when_it_cannot_update_a_cow
+    cow = Cow.new
+    cow.name = 'Milky'
+    cow.instance_variable_set('@id', 2)
+    error = assert_raises(Strapi::Error) { cow.save }
+    assert_equal error.message, 'Forbidden'
+  end
+
+  def test_it_throws_validation_error_for_missing_name
+    cow = Cow.new(pattern: 'Jersey', name: nil)
+    cow.instance_variable_set('@id', 3)
+    error = assert_raises(Strapi::Error) { cow.save }
+    assert_equal error.message, 'name must be at least 1 characters'
+  end
+
+  def test_it_can_create_a_cow
+    cow = Cow.new(name: 'Milky')
+    assert_nil cow.id
+    assert_equal cow.name, 'Milky'
+    cow.save
+    refute_nil cow.id
+  end
+
+  def test_it_can_create_a_cow_with_create
+    cow = Cow.create(name: 'Milky')
+    refute_nil cow.id
+    assert_equal cow.name, 'Milky'
+  end
+
+  def test_it_can_update_a_cow
+    cow = Cow.find(1, populate: '*')
+    refute_nil cow.id
+    assert_equal cow.name, 'Hershey'
+    cow.name = 'Milky'
+    assert_equal cow.save, cow
+    assert_equal cow.name, 'Milky'
+  end
+
+  def test_it_can_delete_a_cow
+    cow = Cow.find(1)
+    cow.delete
+    assert_equal cow.deleted, true
   end
 end

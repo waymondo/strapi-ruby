@@ -1,0 +1,13 @@
+{
+  "data": null,
+  "error": {
+    "status": 400,
+    "name": "ValidationError",
+    "message": "name must be at least 1 characters",
+    "details": {
+      "errors": [
+        { "path": ["name"], "message": "name must be at least 1 characters", "name": "ValidationError" }
+      ]
+    }
+  }
+}

@@ -43,7 +43,7 @@ STRAPI_HOST_URL=http://localhost:1337
 STRAPI_API_TOKEN=asdf1234qwer5678
 ```
 
-#### Defining Content Type Classes
+### Defining Content Type Classes
 
 In Ruby, define some content type classes, i.e.:
 
@@ -113,7 +113,7 @@ parameter options are included by default, so if you want to eagerly load relate
 example, you’ll need to specify that with the `populate` option:
 
 ``` ruby
-cows = Cow.all(populate: "*")
+cows = Cow.all(populate: '*')
 cows.first.farm.name # => "McDonald’s"
 farm = Farm.find(1, populate: ['cows'])
 farm.cows.first.name # => "Hershey"
@@ -122,9 +122,49 @@ farm.cows.first.name # => "Hershey"
 The class method `.where` also exists, which is the same implementation as `.all`, except a hash of
 API parameters is required.
 
-### CRUD
+### Creating, Updating, Deleting
 
-Coming Soon
+You can create and update entries by calling `.save` on them:
+
+``` ruby
+cow = Cow.new(name: 'Hershey')
+cow.id # => nil
+cow.save # => performs POST request
+cow.id # => 1
+cow = Cow.find(1)
+cow.name = 'Bessie'
+cow.save # => performs PUT request
+```
+
+You can also use `create` class method to more concisely create entries:
+
+``` ruby
+cow = Cow.create(name: 'Bessie')
+cow.id # => 1
+```
+
+You can delete entries by calling `.delete` on them:
+
+``` ruby
+cow = Cow.find(1)
+cow.delete # => performs DELETE request
+cow = Cow.find(1) # => raises Strapi::Error
+```
+
+### Error Handling
+
+Any non successful Strapi request will raise a
+[Strapi::Error](https://github.com/waymondo/strapi-ruby/blob/main/lib/strapi/error.rb) with the API
+response’s status, message, and payload, which you can rescue and handle accordingly:
+
+``` ruby
+def show
+  cow = Cow.find(123)
+  render :cow, cow: cow
+rescue Strapi::Error => e
+  render :error, message: e.message
+end
+```
 
 ## Development
 
