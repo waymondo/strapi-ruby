@@ -179,7 +179,7 @@ file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/waymondo/strapi.
+Bug reports and pull requests are welcome on GitHub at https://github.com/waymondo/strapi-ruby.
 
 ## License
 

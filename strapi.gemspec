@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Easily define Strapi content as Ruby classes'
   spec.description = 'Easily define Strapi content as Ruby classes'
-  spec.homepage = 'https://github.com/waymondo/strapi'
+  spec.homepage = 'https://github.com/waymondo/strapi-ruby'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 2.7.0'
 
