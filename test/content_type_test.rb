@@ -74,10 +74,12 @@ class ContentTypeTest < Minitest::Test
   def test_it_can_update_a_cow
     cow = Cow.find(1, populate: '*')
     refute_nil cow.id
+    refute_nil cow.farm.name
     assert_equal cow.name, 'Hershey'
     cow.name = 'Milky'
     assert_equal cow.save, cow
     assert_equal cow.name, 'Milky'
+    refute_nil cow.farm.name
   end
 
   def test_it_can_delete_a_cow

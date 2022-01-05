@@ -25,7 +25,7 @@ module Strapi
       response = id ? update_request(query_hash) : create_request(query_hash)
       entry = self.class.send(:new_from_response, response)
       tap do
-        @attributes = entry.attributes
+        @attributes = attributes.deep_merge entry.attributes
         @id = entry.id
       end
     end
