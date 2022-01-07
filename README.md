@@ -27,21 +27,29 @@ And then execute:
 
 ## Usage
 
-This gem has only been tested with Strapi v4. It may work with previous versions of Strapi, but they
+Note: this gem has only been tested with Strapi v4. It may work with previous versions of Strapi, but they
 remain untested at this time.
 
 ### Configuration
 
-You will first need to set an `ENV` variable for `STRAPI_HOST_URL` and `STRAPI_API_TOKEN` (the
-  latter is only required if accessing content types requires authentication). This can be done with
-  [`dotenv`](https://github.com/bkeepers/dotenv/), in an initializer, or some other mechanism.
+You will first need to set an `ENV` variable for `STRAPI_HOST_URL`, `STRAPI_IDENTIFIER` and
+`STRAPI_PASSWORD`. This can be done with [`dotenv`](https://github.com/bkeepers/dotenv/), in an
+initializer, or some other mechanism.
 
 If using `dotev`, your `.env` file would contain:
 
 ```
 STRAPI_HOST_URL=http://localhost:1337
-STRAPI_API_TOKEN=asdf1234qwer5678
+STRAPI_IDENTIFIER=admin@example.com
+STRAPI_PASSWORD=password
 ```
+
+The `STRAPI_IDENTIFIER` and `STRAPI_PASSWORD` should be the login information for a user that has a
+role that grants access to your authenticated content. [Strapi Authenticated request
+documentation](https://docs.strapi.io/developer-docs/latest/guides/auth-request.html)
+
+Upon running the first method that interacts with the Strapi API, a JWT token will be fetched and
+cached.
 
 ### Defining Content Type Classes
 
@@ -121,6 +129,10 @@ farm.cows.first.name # => "Hershey"
 
 The class method `.where` also exists, which is the same implementation as `.all`, except a hash of
 API parameters is required.
+
+``` ruby
+cows = Product.where(filters: { name: { '$eq': 'Hershey' } })
+```
 
 ### Creating, Updating, Deleting
 

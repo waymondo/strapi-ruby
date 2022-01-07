@@ -6,7 +6,7 @@ module Strapi
     attr_reader :parsed_response
 
     def initialize(faraday_response)
-      @parsed_response = Oj.load(faraday_response.body)
+      @parsed_response = faraday_response.body
       return if faraday_response.success?
 
       raise Error, error

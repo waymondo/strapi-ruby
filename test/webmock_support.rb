@@ -3,6 +3,7 @@
 module WebmockSupport
   def setup
     stub_get_requests
+    stub_path_and_return_json(:post, '/auth/local', 'fixtures/jwt.json', 200)
     stub_path_and_return_json(:put, '/cows/2', 'fixtures/403.json', 403)
     stub_path_and_return_json(:put, '/cows/3', 'fixtures/400.json', 400)
     stub_path_and_return_json(:post, '/cows', 'fixtures/cow2.json', 200)
@@ -23,6 +24,10 @@ module WebmockSupport
 
   def stub_path_and_return_json(method, path, json, status)
     stub_request(method, "http://localhost:1337/api#{path}")
-      .to_return(body: File.read(File.join(__dir__, json)), status: status)
+      .to_return(
+        body: File.read(File.join(__dir__, json)),
+        headers: { content_type: 'application/json' },
+        status: status
+      )
   end
 end

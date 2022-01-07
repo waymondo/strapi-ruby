@@ -5,28 +5,19 @@ module Strapi
   class Connection
     class << self
       def instance
-        @instance ||= build_instance
-      end
-
-      private
-
-      def build_instance
-        unless Faraday.default_adapter
-          require 'faraday/net_http'
-          Faraday.default_adapter = :net_http
+        @instance ||= Faraday::Connection.new("#{ENV['STRAPI_HOST_URL']}/api") do |f|
+          f.request :json
+          f.response :json
+          f.adapter :net_http
         end
-
-        Faraday::Connection.new("#{ENV['STRAPI_HOST_URL']}/api", options)
       end
 
-      def options
-        return unless (api_token = ENV['STRAPI_API_TOKEN'].presence)
-
-        {
-          headers: {
-            'Authorization' => "bearer #{api_token}"
-          }
-        }
+      def jwt_token
+        @jwt_token ||= instance.post(
+          'auth/local',
+          identifier: ENV['STRAPI_IDENTIFIER'],
+          password: ENV['STRAPI_PASSWORD']
+        ).body['jwt']
       end
     end
   end

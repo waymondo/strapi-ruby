@@ -30,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport'
   spec.add_dependency 'faraday', '~> 2.0'
   spec.add_dependency 'faraday-net_http', '~> 2.0'
-  spec.add_dependency 'oj', '~> 3.0'
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

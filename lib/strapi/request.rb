@@ -6,7 +6,13 @@ module Strapi
     class << self
       %i[get head delete trace post put patch].each do |method|
         define_method(method) do |*args|
-          Response.new(Connection.instance.send(method, *args))
+          Response.new(
+            Connection.instance.send(method, *args) do |f|
+              f.headers = {
+                'Authorization' => "bearer #{Connection.jwt_token}"
+              }
+            end
+          )
         end
       end
     end

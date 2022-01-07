@@ -5,7 +5,7 @@ require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/object/to_query'
 require 'active_support/core_ext/hash/keys'
 require 'faraday'
-require 'oj'
+require 'faraday/net_http'
 
 require_relative 'strapi/connection'
 require_relative 'strapi/content_type'

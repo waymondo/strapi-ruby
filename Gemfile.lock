@@ -5,7 +5,6 @@ PATH
       activesupport
       faraday (~> 2.0)
       faraday-net_http (~> 2.0)
-      oj (~> 3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -35,7 +34,6 @@ GEM
     irb (1.4.1)
       reline (>= 0.3.0)
     minitest (5.15.0)
-    oj (3.13.10)
     parallel (1.21.0)
     parser (3.0.3.2)
       ast (~> 2.4.1)
