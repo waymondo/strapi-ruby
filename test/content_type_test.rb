@@ -92,5 +92,7 @@ class ContentTypeTest < Minitest::Test
   def test_it_can_parse_strapi_media
     cow = Cow.find(1)
     assert_equal cow.photo.url, 'http://localhost:1337/uploads/cow_8fdf0d4e0a.png'
+    cow = Cow.find(2)
+    assert_equal cow.photo.url, 'https://res.cloudinary.com/uploads/cow_8fdf0d4e0a.png'
   end
 end

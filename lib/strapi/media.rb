@@ -19,7 +19,13 @@ module Strapi
     field :provider_metadata
 
     def url
-      ENV['STRAPI_HOST_URL'] + @attributes[:url]
+      return unless (url_string = @attributes[:url].presence)
+
+      if url_string.include?('//')
+        url_string
+      else
+        ENV['STRAPI_HOST_URL'] + url_string
+      end
     end
   end
 end
