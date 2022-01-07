@@ -34,6 +34,11 @@ class ContentTypeTest < Minitest::Test
     assert_equal farm.cows.first, cow
   end
 
+  def test_it_validates_query_params
+    error = assert_raises(Strapi::Error) { Farm.all(foo: 'bar') }
+    assert_equal error.message, 'Unallowed query params - foo'
+  end
+
   def test_it_throws_a_error_when_it_cannot_find_a_cow
     error = assert_raises(Strapi::Error) { Cow.find(404) }
     assert_equal error.message, 'Not Found'

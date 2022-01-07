@@ -19,10 +19,10 @@ module Strapi
       other.is_a?(self.class) && id == other.id
     end
 
-    def save(query_hash = {})
+    def save(params = {})
       return if deleted
 
-      response = id ? update_request(query_hash) : create_request(query_hash)
+      response = id ? update_request(params) : create_request(params)
       entry = self.class.send(:new_from_response, response)
       tap do
         @attributes = attributes.deep_merge entry.attributes
@@ -30,8 +30,8 @@ module Strapi
       end
     end
 
-    def delete(query_hash = {})
-      Request.delete("#{self.class.send(:_plural_id)}/#{id}?#{query_hash.to_query}")
+    def delete(params = {})
+      Request.delete("#{self.class.send(:_plural_id)}/#{id}", params)
       @attributes = {}
       @id = nil
       @deleted = true
@@ -40,16 +40,16 @@ module Strapi
 
     private
 
-    def create_request(query_hash)
+    def create_request(params)
       Request.post(
-        "#{self.class.send(:_plural_id)}?#{query_hash.to_query}",
+        "#{self.class.send(:_plural_id)}?#{params.to_query}",
         data: attributes.slice(*self.class.fields)
       ).data
     end
 
-    def update_request(query_hash)
+    def update_request(params)
       Request.put(
-        "#{self.class.send(:_plural_id)}/#{id}?#{query_hash.to_query}",
+        "#{self.class.send(:_plural_id)}/#{id}?#{params.to_query}",
         data: attributes.slice(*self.class.fields)
       ).data
     end
@@ -94,20 +94,20 @@ module Strapi
         end
       end
 
-      def find(id, query_hash = {})
-        new_from_response Request.get("#{_plural_id}/#{id}?#{query_hash.to_query}").data
+      def find(id, params = {})
+        new_from_response Request.get("#{_plural_id}/#{id}", params).data
       end
 
-      def all(query_hash = {})
-        get_list(query_hash)
+      def all(params = {})
+        get_list(params)
       end
 
-      def where(query_hash)
-        get_list(query_hash)
+      def where(params)
+        get_list(params)
       end
 
-      def create(attributes, query_hash = {})
-        new(attributes).save(query_hash)
+      def create(attributes, params = {})
+        new(attributes).save(params)
       end
 
       private
@@ -118,8 +118,8 @@ module Strapi
         end
       end
 
-      def get_list(query_hash)
-        Request.get("#{_plural_id}?#{query_hash.to_query}").data.map do |result|
+      def get_list(params)
+        Request.get(_plural_id, params).data.map do |result|
           new_from_response result
         end
       end
