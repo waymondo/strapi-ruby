@@ -12,6 +12,7 @@ end
 class Cow < Strapi::ContentType
   plural_id 'cows'
   field :name
+  field :photo, content_type: Strapi::Media
   field :farm, content_type: 'Farm'
 end
 
@@ -86,5 +87,10 @@ class ContentTypeTest < Minitest::Test
     cow = Cow.find(1)
     cow.delete
     assert_equal cow.deleted, true
+  end
+
+  def test_it_can_parse_strapi_media
+    cow = Cow.find(1)
+    assert_equal cow.photo.url, 'http://localhost:1337/uploads/cow_8fdf0d4e0a.png'
   end
 end

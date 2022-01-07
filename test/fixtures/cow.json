@@ -6,6 +6,41 @@
       "createdAt": "2022-01-02T20:14:53.383Z",
       "updatedAt": "2022-01-02T20:14:55.291Z",
       "publishedAt": "2022-01-02T20:14:55.290Z",
+      "photo": {
+        "data": {
+          "id": 1,
+          "attributes": {
+            "name": "cow.png",
+            "alternativeText": "cow.png",
+            "caption": "cow.png",
+            "width": 807,
+            "height": 475,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_cow.png",
+                "hash": "thumbnail_cow_8fdf0d4e0a",
+                "ext": ".png",
+                "mime": "image/png",
+                "width": 245,
+                "height": 144,
+                "size": 6.46,
+                "path": null,
+                "url": "/uploads/thumbnail_cow_8fdf0d4e0a.png"
+              }
+            },
+            "hash": "cow_8fdf0d4e0a",
+            "ext": ".png",
+            "mime": "image/png",
+            "size": 34.49,
+            "url": "/uploads/cow_8fdf0d4e0a.png",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "createdAt": "2022-01-04T02:58:21.955Z",
+            "updatedAt": "2022-01-04T02:58:21.955Z"
+          }
+        }
+      },
       "farm": {
         "data": {
           "id": 1,

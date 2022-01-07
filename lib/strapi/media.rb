@@ -19,7 +19,7 @@ module Strapi
     field :provider_metadata
 
     def url
-      ENV['STRAPI_HOST_URL'] + @attributes['url']
+      ENV['STRAPI_HOST_URL'] + @attributes[:url]
     end
   end
 end
