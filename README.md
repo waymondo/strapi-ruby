@@ -44,8 +44,8 @@ STRAPI_IDENTIFIER=admin@example.com
 STRAPI_PASSWORD=password
 ```
 
-The `STRAPI_IDENTIFIER` and `STRAPI_PASSWORD` should be the login information for a user that has a
-role that grants access to your authenticated content. [Strapi Authenticated request
+The `STRAPI_IDENTIFIER` and `STRAPI_PASSWORD` should be the login information for a user with a role
+that grants access to your authenticated content. [Strapi Authenticated request
 documentation](https://docs.strapi.io/developer-docs/latest/guides/auth-request.html)
 
 Upon running the first method that interacts with the Strapi API, a JWT token will be fetched and
@@ -131,7 +131,7 @@ The class method `.where` also exists, which is the same implementation as `.all
 API parameters is required.
 
 ``` ruby
-cows = Product.where(filters: { name: { '$eq': 'Hershey' } })
+cows = Cow.where(filters: { name: { '$eq': 'Hershey' } })
 ```
 
 ### Creating, Updating, Deleting
