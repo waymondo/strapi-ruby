@@ -113,6 +113,8 @@ module Strapi
       private
 
       def new_from_response(response)
+        return unless response
+
         new(response['attributes'].transform_keys(&:underscore)).tap do |entry|
           entry.instance_variable_set('@id', response['id'])
         end
