@@ -61,7 +61,7 @@ module Strapi
     end
 
     def strapi_attr_value(attr, options)
-      return unless (value = @attributes[attr])
+      return if (value = @attributes[attr]).nil?
       return value unless (content_type = options[:content_type])
 
       content_type_class = content_type.is_a?(String) ? content_type.constantize : content_type
