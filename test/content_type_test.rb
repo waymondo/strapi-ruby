@@ -12,6 +12,10 @@ end
 class Cow < Strapi::ContentType
   plural_id 'cows'
   field :name
+  field :is_sick
+  field :last_known_disease
+  field :age
+  field :weight_in_kilogram
   field :photo, content_type: Strapi::Media
   field :farm, content_type: 'Farm'
 end
@@ -99,5 +103,14 @@ class ContentTypeTest < Minitest::Test
     assert_equal cow.photo.url, 'http://localhost:1337/uploads/cow_8fdf0d4e0a.png'
     cow = Cow.find(2)
     assert_equal cow.photo.url, 'https://res.cloudinary.com/uploads/cow_8fdf0d4e0a.png'
+  end
+
+  def test_it_return_field_type_correctly
+    cow = Cow.find(1)
+    assert_equal cow.name, 'Hershey'
+    assert_equal cow.is_sick, false
+    assert_nil cow.last_known_disease
+    assert_equal cow.age, 4
+    assert_equal cow.weight_in_kilogram, 456.7
   end
 end

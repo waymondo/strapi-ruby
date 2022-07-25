@@ -4,6 +4,7 @@
       "id": 1,
       "attributes": {
         "name": "Hershey",
+        "isSick": false,
         "createdAt": "2022-01-02T20:14:53.383Z",
         "updatedAt": "2022-01-02T20:14:55.291Z",
         "publishedAt": "2022-01-02T20:14:55.290Z",
