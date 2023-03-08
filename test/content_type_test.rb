@@ -112,6 +112,21 @@ class ContentTypeTest < Minitest::Test
     assert_nil cow.last_known_disease
     assert_equal cow.age, 4
     assert_equal cow.weight_in_kilogram, 456.7
+  end
+
+  def test_it_return_datetime_field_type_correctly
+    assert cow.created_at.is_a?(DateTime)
+    assert cow.updated_at.is_a?(DateTime)
+    assert cow.published_at.is_a?(DateTime)
+  end
+
+  def test_it_can_handle_defined_date_fields
+    Cow.send(:field, :updated_at)
+    Cow.send(:field, :published_at)
+    Cow.send(:field, :published_at)
+
+    cow = Cow.find(1)
+
     assert cow.created_at.is_a?(DateTime)
     assert cow.updated_at.is_a?(DateTime)
     assert cow.published_at.is_a?(DateTime)

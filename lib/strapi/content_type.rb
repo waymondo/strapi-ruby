@@ -3,13 +3,15 @@
 module Strapi
   # The class for defining a Ruby class that represents a Strapi Content-Type
   class ContentType
+    DEFAULT_DATETIME_ATTRIBUTES = %i[created_at updated_at published_at].freeze
+
     attr_reader :id, :attributes, :deleted
 
     def initialize(attributes = {})
       @attributes = attributes.symbolize_keys
     end
 
-    %w[created_at updated_at published_at].each do |method|
+    DEFAULT_DATETIME_ATTRIBUTES.each do |method|
       define_method(method) do
         datetime_from_timestamp method
       end
@@ -55,7 +57,7 @@ module Strapi
     end
 
     def datetime_from_timestamp(key)
-      return unless (timestamp = @attributes[key.to_sym])
+      return unless (timestamp = @attributes[key])
 
       DateTime.parse timestamp
     end
@@ -83,6 +85,9 @@ module Strapi
 
       def field(attr, options = {})
         @fields = [] if fields.nil?
+
+        return if DEFAULT_DATETIME_ATTRIBUTES.include?(attr)
+
         fields << attr
 
         define_method attr do
