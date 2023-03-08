@@ -112,5 +112,8 @@ class ContentTypeTest < Minitest::Test
     assert_nil cow.last_known_disease
     assert_equal cow.age, 4
     assert_equal cow.weight_in_kilogram, 456.7
+    assert cow.created_at.is_a?(DateTime)
+    assert cow.updated_at.is_a?(DateTime)
+    assert cow.published_at.is_a?(DateTime)
   end
 end

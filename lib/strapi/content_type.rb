@@ -55,7 +55,7 @@ module Strapi
     end
 
     def datetime_from_timestamp(key)
-      return unless (timestamp = @attributes[key])
+      return unless (timestamp = @attributes[key.to_sym])
 
       DateTime.parse timestamp
     end
