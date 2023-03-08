@@ -63,6 +63,9 @@ class Farm < Strapi::ContentType
 end
 ```
 
+Strapi default timestamps fields (created_at, updated_at, published_at) are automatically added to all content types,
+and can be accessed with `.created_at` and it will be automatically converted to a `DateTime` object.
+
 ``` ruby
 class Cow < Strapi::ContentType
   field :name
