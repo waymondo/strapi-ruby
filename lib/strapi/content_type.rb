@@ -84,9 +84,18 @@ module Strapi
       end
 
       def field(attr, options = {})
-        @fields = [] if fields.nil?
+        if DEFAULT_DATETIME_ATTRIBUTES.include?(attr)
+          puts(
+            <<~MSG.gsub(/\n/, " ")
+              `.#{attr}` is a private attribute and already defined.
+              You cannot treat it as an attribute.
+              Remove `field :#{attr}` to silence this message.
+            MSG
+          )
+          return
+        end
 
-        return if DEFAULT_DATETIME_ATTRIBUTES.include?(attr)
+        @fields = [] if fields.nil?
 
         fields << attr
 

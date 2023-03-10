@@ -115,20 +115,19 @@ class ContentTypeTest < Minitest::Test
   end
 
   def test_it_return_datetime_field_type_correctly
-    assert cow.created_at.is_a?(DateTime)
-    assert cow.updated_at.is_a?(DateTime)
-    assert cow.published_at.is_a?(DateTime)
-  end
-
-  def test_it_can_handle_defined_date_fields
-    Cow.send(:field, :updated_at)
-    Cow.send(:field, :published_at)
-    Cow.send(:field, :published_at)
-
     cow = Cow.find(1)
 
     assert cow.created_at.is_a?(DateTime)
     assert cow.updated_at.is_a?(DateTime)
     assert cow.published_at.is_a?(DateTime)
+  end
+
+  def test_it_ignores_datetime_private_attributes_and_prints_message
+    assert_output(/`.created_at` is a private attribute and already defined/) do
+      Cow.send(:field, :created_at)
+
+      cow = Cow.find(1)
+      assert cow.created_at.is_a?(DateTime)
+    end
   end
 end
