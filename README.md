@@ -105,6 +105,9 @@ class FarmWorker
 end
 ```
 
+Strapi default timestamps fields (`created_at`, `updated_at`, `published_at`) are automatically converted
+into `DateTime` objects and do not need to be added with `field` declarations.
+
 ### Fetching Entries
 
 `Strapi::ContentType` provides some predictable methods for retrieving entries from your Strapi API:

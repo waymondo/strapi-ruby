@@ -113,4 +113,21 @@ class ContentTypeTest < Minitest::Test
     assert_equal cow.age, 4
     assert_equal cow.weight_in_kilogram, 456.7
   end
+
+  def test_it_return_datetime_field_type_correctly
+    cow = Cow.find(1)
+
+    assert cow.created_at.is_a?(DateTime)
+    assert cow.updated_at.is_a?(DateTime)
+    assert cow.published_at.is_a?(DateTime)
+  end
+
+  def test_it_ignores_datetime_private_attributes_and_prints_message
+    assert_output(/`.created_at` is a private attribute and already defined/) do
+      Cow.send(:field, :created_at)
+
+      cow = Cow.find(1)
+      assert cow.created_at.is_a?(DateTime)
+    end
+  end
 end

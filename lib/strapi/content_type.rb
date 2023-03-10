@@ -3,13 +3,15 @@
 module Strapi
   # The class for defining a Ruby class that represents a Strapi Content-Type
   class ContentType
+    DEFAULT_DATETIME_ATTRIBUTES = %i[created_at updated_at published_at].freeze
+
     attr_reader :id, :attributes, :deleted
 
     def initialize(attributes = {})
       @attributes = attributes.symbolize_keys
     end
 
-    %w[created_at updated_at published_at].each do |method|
+    DEFAULT_DATETIME_ATTRIBUTES.each do |method|
       define_method(method) do
         datetime_from_timestamp method
       end
@@ -82,7 +84,19 @@ module Strapi
       end
 
       def field(attr, options = {})
+        if DEFAULT_DATETIME_ATTRIBUTES.include?(attr)
+          puts(
+            <<~MSG.gsub(/\n/, " ")
+              `.#{attr}` is a private attribute and already defined.
+              You cannot treat it as an attribute.
+              Remove `field :#{attr}` to silence this message.
+            MSG
+          )
+          return
+        end
+
         @fields = [] if fields.nil?
+
         fields << attr
 
         define_method attr do
