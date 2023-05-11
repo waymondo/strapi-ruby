@@ -20,6 +20,7 @@ module WebmockSupport
     stub_path_and_return_json(:get, '/cows/404', 'fixtures/404.json', 404)
     stub_path_and_return_json(:get, '/cows/1', 'fixtures/cow.json', 200)
     stub_path_and_return_json(:get, '/cows/2', 'fixtures/cow2.json', 200)
+    stub_path_and_return_json(:get, '/farms?pagination%5BpageSize%5D=2&pagination%5Bpage%5D=1', 'fixtures/farms.json', 200)
   end
 
   def stub_path_and_return_json(method, path, json, status)
