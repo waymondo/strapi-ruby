@@ -12,7 +12,7 @@ module Strapi
       raise Error, error
     end
 
-    %w[data error].each do |method|
+    %w[data error meta].each do |method|
       define_method(method) do
         @parsed_response[method]
       end
