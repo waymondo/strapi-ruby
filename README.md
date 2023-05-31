@@ -137,6 +137,25 @@ API parameters is required.
 cows = Cow.where(filters: { name: { '$eq': 'Hershey' } })
 ```
 
+### Pagination
+In order to paginate results, you can have to provide the Strapi's [API pagination parameters](https://docs.strapi.io/dev-docs/api/rest/sort-pagination#pagination), it will return an
+`Strapi::CollectionContentType` object with the following convenience methods:
+
+```ruby
+farms = Farm.all(pagination: { page: 1, pageSize: 10 })
+
+# Collection's methods
+farms.size # => 10 # or count
+farms.has_next_page? # => true
+farms.first # => #<Farm>
+
+# Pagination's methods
+farms.pagination.page # => 1
+farms.pagination.page_size # => 10
+farms.pagination.page_count # => 5
+farms.pagination.total # => 45
+```
+
 ### Creating, Updating, Deleting
 
 You can create and update entries by calling `.save` on them:
