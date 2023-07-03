@@ -135,9 +135,11 @@ module Strapi
       end
 
       def get_list(params)
-        Request.get(_plural_id, params).data.map do |result|
-          new_from_response result
-        end
+        response = Request.get(_plural_id, params)
+        data = response.data.map{ |result| new_from_response result }
+        meta = response.meta
+
+        CollectionContentType.new(data, meta)
       end
 
       def _plural_id

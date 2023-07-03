@@ -38,6 +38,17 @@ class ContentTypeTest < Minitest::Test
     assert_equal farm.cows.first, cow
   end
 
+  def test_it_can_be_paginated
+    farms = Farm.all(pagination: { page: 1, pageSize: 2 })
+    assert farms.is_a?(Strapi::CollectionContentType), 'Expected farms to be an CollectionContentType'
+    assert farms.respond_to?(:has_next_page?)
+    assert_equal farms.size, 2
+    assert_equal farms.pagination.page, 1
+    assert_equal farms.pagination.page_size, 2
+    assert_equal farms.pagination.page_count, 2
+    assert_equal farms.pagination.total, 4
+  end
+
   def test_it_validates_query_params
     error = assert_raises(Strapi::Error) { Farm.all(foo: 'bar') }
     assert_equal error.message, 'Unallowed query params - foo'
